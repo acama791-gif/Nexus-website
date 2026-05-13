@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexus Study Centre | Fontainebleau, Randburg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #171740;
+      --blue: #79A6F1;
+      --navy-light: #222260;
+      --blue-pale: #dce9fd;
+      --white: #ffffff;
+      --off-white: #f8f9fc;
+      --text: #2a2a4a;
+      --text-muted: #6e6e8a;
+      --border: #e4eaf5;
+      --shadow: 0 4px 24px rgba(23,23,64,0.10);
+      --shadow-lg: 0 8px 48px rgba(23,23,64,0.15);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.2; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ── PAGE SYSTEM ── */
+    .page { display: none; }
+    .page.active { display: block; animation: fadeUp 0.5s ease both; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      transition: var(--transition);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 72px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+    }
+    .nav-logo img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
+    .nav-logo-text { color: var(--white); }
+    .nav-logo-text strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1; }
+    .nav-logo-text span { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); opacity: 0.9; }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px; list-style: none;
+    }
+    .nav-links li a {
+      color: rgba(255,255,255,0.82); font-size: 0.88rem; font-weight: 600;
+      padding: 8px 14px; border-radius: 8px; letter-spacing: 0.04em;
+      transition: var(--transition); cursor: pointer; display: block;
+    }
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      color: var(--white); background: rgba(121,166,241,0.18);
+    }
+    .btn-nav-cta {
+      background: var(--blue); color: var(--navy) !important;
+      padding: 9px 22px !important; border-radius: 9px !important;
+      font-weight: 700 !important; font-size: 0.85rem !important;
+      letter-spacing: 0.04em; transition: var(--transition) !important;
+    }
+    .btn-nav-cta:hover { background: #a8c8f8 !important; transform: translateY(-1px); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 6px; border-radius: 6px; background: transparent; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px; transition: var(--transition);
+    }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      background: var(--navy); padding: 12px 20px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); font-size: 0.95rem; font-weight: 600;
+      padding: 12px 4px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer; display: block;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .btn-nav-cta {
+      margin-top: 10px; background: var(--blue) !important;
+      color: var(--navy) !important; text-align: center;
+      border-radius: 9px !important; padding: 12px !important;
+    }
+
+    /* ════════════════════════════════
+       SECTION / LAYOUT UTILITIES
+    ════════════════════════════════ */
+    .page-wrap { padding-top: 72px; }
+    section { padding: 90px 32px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--blue); background: var(--blue-pale);
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem); color: var(--navy);
+      margin-bottom: 18px; max-width: 700px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--text-muted); max-width: 640px;
+      line-height: 1.75; margin-bottom: 0;
+    }
+    .section-header { margin-bottom: 52px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-title,
+    .section-header.center .section-subtitle { margin-left: auto; margin-right: auto; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em;
+      cursor: pointer; transition: var(--transition); border: none;
+    }
+    .btn-primary { background: var(--navy); color: var(--white); }
+    .btn-primary:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+    .btn-outline:hover { background: var(--navy); color: var(--white); }
+    .btn-blue { background: var(--blue); color: var(--navy); }
+    .btn-blue:hover { background: #a0bef5; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(121,166,241,0.35); }
+    .btn-white { background: var(--white); color: var(--navy); }
+    .btn-white:hover { background: var(--blue-pale); transform: translateY(-2px); }
+
+    /* ════════════════════════════════
+       HOME — HERO
+    ════════════════════════════════ */
+    .hero {
+      min-height: 100vh; background: var(--navy);
+      display: flex; align-items: center; position: relative; overflow: hidden;
+      padding: 120px 32px 80px;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('pexels-max-fischer-5212676.jpg') center/cover no-repeat;
+      opacity: 0.12;
+    }
+    .hero-bg-blob {
+      position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(121,166,241,0.22) 0%, transparent 70%);
+      right: -100px; top: 50%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(121,166,241,0.18); border: 1px solid rgba(121,166,241,0.35);
+      color: var(--blue); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 50px; margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.55rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem); color: var(--white);
+      margin-bottom: 22px; line-height: 1.1;
+    }
+    .hero h1 em { font-style: normal; color: var(--blue); }
+    .hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,0.75);
+      max-width: 560px; margin-bottom: 38px; line-height: 1.8;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px; flex-wrap: wrap;
+    }
+    .hero-stat strong {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; color: var(--blue); font-weight: 700; line-height: 1;
+    }
+    .hero-stat span { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-top: 4px; display: block; }
+
+    /* ── HOME WHY US ── */
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+    }
+    .why-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px 30px;
+      transition: var(--transition);
+    }
+    .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--blue); }
+    .why-icon {
+      width: 52px; height: 52px; background: var(--blue-pale);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .why-card h3 { font-size: 1.25rem; color: var(--navy); margin-bottom: 10px; }
+    .why-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── HOME PHOTO GRID ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 260px 260px;
+      gap: 16px; border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .photo-grid .p1 { grid-column: 1/2; grid-row: 1/3; }
+    .photo-grid .p2 { grid-column: 2/3; grid-row: 1/2; }
+    .photo-grid .p3 { grid-column: 3/4; grid-row: 1/2; }
+    .photo-grid .p4 { grid-column: 2/4; grid-row: 2/3; }
+    .photo-grid img { width:100%; height:100%; object-fit:cover; border-radius: var(--radius); }
+
+    /* ── HOME CURRICULUM CARDS ── */
+    .curriculum-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .curr-card {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      min-height: 320px; cursor: pointer;
+    }
+    .curr-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .curr-card:hover img { transform: scale(1.05); }
+    .curr-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(23,23,64,0.92) 0%, rgba(23,23,64,0.3) 60%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 36px;
+    }
+    .curr-overlay .tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue);
+      background: rgba(121,166,241,0.2); border: 1px solid rgba(121,166,241,0.4);
+      padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 10px; width: fit-content;
+    }
+    .curr-overlay h3 { font-size: 1.8rem; color: var(--white); margin-bottom: 10px; }
+    .curr-overlay p { font-size: 0.88rem; color: rgba(255,255,255,0.75); margin-bottom: 20px; line-height: 1.6; }
+    .curr-overlay a { color: var(--blue); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; }
+
+    /* ── TESTIMONIAL STRIP ── */
+    .testimonial-strip { background: var(--navy); color: var(--white); }
+    .quote-block { max-width: 760px; margin: 0 auto; text-align: center; }
+    .quote-block .q-mark { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: var(--blue); line-height: 0.5; margin-bottom: 20px; }
+    .quote-block blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.85rem); font-weight: 500; line-height: 1.55; color: rgba(255,255,255,0.9); margin-bottom: 22px; }
+    .quote-block cite { font-size: 0.85rem; color: var(--blue); font-style: normal; letter-spacing: 0.08em; font-weight: 600; }
+
+    /* ════════════════════════════════
+       CAMBRIDGE & CAPS PAGES
+    ════════════════════════════════ */
+    .page-hero {
+      background: var(--navy); padding: 100px 32px 70px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::after {
+      content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .page-hero.cambridge::after { background: url('pexels-karola-g-6256064.jpg') center/cover; opacity: 0.2; }
+    .page-hero.caps::after { background: url('gettyimages-1442803934-612x612.jpg') center/cover; opacity: 0.25; }
+    .page-hero .container { position: relative; z-index: 2; }
+    .page-hero h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--white); margin-bottom: 16px; }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 560px; line-height: 1.75; }
+
+    /* Level tabs */
+    .level-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 44px; }
+    .level-tab {
+      padding: 9px 22px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em;
+      border: 2px solid var(--border); background: var(--white);
+      color: var(--text-muted); cursor: pointer; transition: var(--transition);
+    }
+    .level-tab.active, .level-tab:hover {
+      background: var(--navy); color: var(--white); border-color: var(--navy);
+    }
+
+    .level-section { margin-bottom: 64px; }
+    .level-header {
+      display: flex; align-items: flex-start; gap: 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      border-radius: var(--radius-lg); padding: 36px 40px;
+      margin-bottom: 32px; position: relative; overflow: hidden;
+    }
+    .level-header::after {
+      content: ''; position: absolute; right: -30px; top: -30px;
+      width: 200px; height: 200px; background: rgba(121,166,241,0.1);
+      border-radius: 50%;
+    }
+    .level-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 3.5rem;
+      font-weight: 700; color: rgba(121,166,241,0.3); line-height: 1;
+      min-width: 60px;
+    }
+    .level-info h2 { font-size: 1.8rem; color: var(--white); margin-bottom: 8px; }
+    .level-info p { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.65; }
+
+    .subjects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .subject-pill {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; font-weight: 600; color: var(--text);
+      transition: var(--transition);
+    }
+    .subject-pill:hover { border-color: var(--blue); background: var(--blue-pale); color: var(--navy); transform: translateY(-2px); }
+    .subject-pill::before { content: '▸'; color: var(--blue); font-size: 0.75rem; }
+
+    /* CAPS grade bands */
+    .grade-bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .grade-band {
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border); background: var(--white);
+    }
+    .grade-band-head {
+      background: var(--navy); color: var(--white);
+      padding: 22px 28px;
+    }
+    .grade-band-head h3 { font-size: 1.3rem; }
+    .grade-band-head span { font-size: 0.8rem; color: var(--blue); letter-spacing: 0.06em; }
+    .grade-band-body { padding: 22px 28px; }
+    .grade-band-body .subject-pill { font-size: 0.84rem; }
+
+    /* ════════════════════════════════
+       ABOUT PAGE
+    ════════════════════════════════ */
+    .about-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center;
+    }
+    .about-img-stack { position: relative; }
+    .about-img-main { border-radius: var(--radius-lg); overflow: hidden; height: 480px; }
+    .about-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .about-img-inset {
+      position: absolute; bottom: -28px; right: -28px;
+      width: 200px; height: 200px; border-radius: var(--radius-lg);
+      overflow: hidden; border: 6px solid var(--white);
+      box-shadow: var(--shadow-lg);
+    }
+    .about-img-inset img { width: 100%; height: 100%; object-fit: cover; }
+    .years-badge {
+      position: absolute; top: -20px; left: -20px;
+      background: var(--blue); color: var(--navy);
+      width: 100px; height: 100px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      border: 5px solid var(--white); box-shadow: var(--shadow);
+    }
+    .years-badge strong { font-size: 2.2rem; line-height: 1; }
+    .years-badge span { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1; }
+    .about-text .section-title { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+    .about-text p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; }
+    .about-highlights { display: flex; gap: 24px; margin-top: 30px; flex-wrap: wrap; }
+    .about-highlight {
+      flex: 1; min-width: 140px;
+      background: var(--off-white); border-radius: var(--radius);
+      padding: 18px 20px; border-left: 3px solid var(--blue);
+    }
+    .about-highlight strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--navy); }
+    .about-highlight span { font-size: 0.8rem; color: var(--text-muted); }
+
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .value-card {
+      text-align: center; padding: 36px 24px;
+      background: var(--off-white); border-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+    .value-card:hover { background: var(--navy); }
+    .value-card:hover h3, .value-card:hover p { color: var(--white); }
+    .value-card:hover p { color: rgba(255,255,255,0.7); }
+    .value-icon { font-size: 2rem; margin-bottom: 16px; }
+    .value-card h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+    .value-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; }
+
+    .mission-block {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      border-radius: var(--radius-lg); padding: 60px 56px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .mission-block h2 { font-size: 2.2rem; color: var(--white); margin-bottom: 18px; }
+    .mission-block p { color: rgba(255,255,255,0.72); line-height: 1.8; font-size: 0.95rem; }
+    .mission-block img { width:100%; height:300px; object-fit:cover; border-radius: var(--radius); }
+
+    /* ════════════════════════════════
+       CONTACT PAGE
+    ════════════════════════════════ */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: start; }
+    .contact-info-card {
+      background: var(--navy); border-radius: var(--radius-lg);
+      padding: 48px 40px; color: var(--white); position: sticky; top: 100px;
+    }
+    .contact-info-card h2 { font-size: 2rem; margin-bottom: 10px; }
+    .contact-info-card > p { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-bottom: 36px; line-height: 1.7; }
+    .contact-item { display: flex; gap: 16px; margin-bottom: 28px; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px; background: rgba(121,166,241,0.18);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item h4 { font-family: 'Nunito Sans', sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 4px; }
+    .contact-item p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
+    .contact-item a { color: rgba(255,255,255,0.8); }
+    .contact-item a:hover { color: var(--blue); }
+    .social-links { display: flex; gap: 10px; margin-top: 30px; }
+    .social-link {
+      width: 40px; height: 40px; background: rgba(121,166,241,0.15);
+      border: 1px solid rgba(121,166,241,0.3); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: var(--transition); cursor: pointer;
+    }
+    .social-link:hover { background: var(--blue); color: var(--navy); }
+
+    /* Form */
+    .contact-form-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 48px 44px;
+      box-shadow: var(--shadow);
+    }
+    .contact-form-card h2 { font-size: 2rem; color: var(--navy); margin-bottom: 8px; }
+    .contact-form-card > p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 36px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 22px; }
+    .form-group label {
+      display: block; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 7px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 13px 16px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.92rem;
+      color: var(--text); background: var(--off-white);
+      transition: var(--transition); outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue); background: var(--white);
+      box-shadow: 0 0 0 4px rgba(121,166,241,0.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%; padding: 16px;
+      background: var(--navy); color: var(--white);
+      font-family: 'Nunito Sans', sans-serif; font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.05em; border: none; border-radius: 10px;
+      cursor: pointer; transition: var(--transition);
+    }
+    .form-submit:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .form-success {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+    .form-success .check {
+      font-size: 3.5rem; margin-bottom: 16px;
+    }
+    .form-success h3 { font-size: 1.8rem; color: var(--navy); margin-bottom: 10px; }
+    .form-success p { color: var(--text-muted); }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer {
+      background: var(--navy); color: var(--white);
+      padding: 64px 32px 28px;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+    .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.55); margin: 16px 0 22px; line-height: 1.75; max-width: 300px; }
+    .footer-col h4 {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.75rem;
+      font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 9px; }
+    .footer-col ul li a {
+      font-size: 0.88rem; color: rgba(255,255,255,0.6);
+      cursor: pointer; transition: var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--blue); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.8rem; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 10px;
+    }
+
+    /* ════════════════════════════════
+       FLOATING WHATSAPP
+    ════════════════════════════════ */
+    .whatsapp-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+    }
+    .whatsapp-btn {
+      width: 58px; height: 58px; background: #25D366;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.4);
+      transition: var(--transition); cursor: pointer;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.55); }
+    .whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
+    .whatsapp-tooltip {
+      position: absolute; right: 68px; top: 50%; transform: translateY(-50%);
+      background: var(--navy); color: var(--white);
+      font-size: 0.8rem; font-weight: 600; white-space: nowrap;
+      padding: 7px 14px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: var(--transition);
+    }
+    .whatsapp-tooltip::after {
+      content: ''; position: absolute; left: 100%; top: 50%;
+      transform: translateY(-50%);
+      border: 6px solid transparent; border-left-color: var(--navy);
+    }
+    .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .about-split, .mission-block, .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .about-img-inset { display: none; }
+      .about-img-main { height: 360px; }
+      .mission-block { padding: 40px 32px; }
+      .mission-block img { height: 220px; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 64px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu.open { display: flex; }
+      .curriculum-cards { grid-template-columns: 1fr; }
+      .photo-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 180px 180px;
+      }
+      .photo-grid .p1 { grid-column:1/2; grid-row:1/2; }
+      .photo-grid .p2 { grid-column:2/3; grid-row:1/2; }
+      .photo-grid .p3 { grid-column:1/2; grid-row:2/3; }
+      .photo-grid .p4 { grid-column:1/3; grid-row:3/4; }
+      .hero-stats { gap: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 32px 24px; }
+      .contact-info-card { position: static; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .level-header { flex-direction: column; gap: 10px; }
+      .page-hero { padding: 100px 20px 60px; }
+      .page-hero::after { display: none; }
+      .hero-ctas { flex-direction: column; }
+      .about-highlights { gap: 14px; }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 0 18px; }
+      .hero { padding: 110px 20px 70px; }
+      .mission-block { grid-template-columns: 1fr; }
+      .grade-bands { grid-template-columns: 1fr; }
+    }
+
+    /* ── Map embed ── */
+    .map-embed { border-radius: var(--radius-lg); overflow: hidden; margin-top: 24px; border: 1px solid var(--border); }
+    .map-embed iframe { width: 100%; height: 220px; border: 0; display: block; }
+
+    /* info bars */
+    .info-bar { background: var(--blue-pale); padding: 14px 32px; border-bottom: 1px solid rgba(121,166,241,0.2); }
+    .info-bar .container { display: flex; justify-content: flex-end; gap: 28px; flex-wrap: wrap; }
+    .info-bar a { font-size: 0.8rem; color: var(--navy); font-weight: 600; }
+    .info-bar a:hover { color: var(--blue); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb-section { background: var(--off-white); border-bottom: 1px solid var(--border); padding: 10px 32px; }
+    .breadcrumb { display: flex; gap: 8px; font-size: 0.8rem; color: var(--text-muted); }
+    .breadcrumb a { cursor: pointer; } .breadcrumb a:hover { color: var(--navy); }
+    .breadcrumb span { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════ INFO BAR ═══════════════════════ -->
+  <div class="info-bar">
+    <div class="container">
+      <a href="tel:0827327292">📞 082 732 7292</a>
+      <a href="mailto:info@nexusstudycentre.com">✉ info@nexusstudycentre.com</a>
+      <a>📍 92 Ethel Street, Fontainebleau, Randburg</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="showPage('home')">
+        <img src="nexus_profile_square.png" alt="Nexus Study Centre"/>
+        <div class="nav-logo-text">
+          <strong>Nexus Study Centre</strong>
+          <span>Fontainebleau · Randburg</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+        <li><a onclick="showPage('cambridge')" id="nav-cambridge">Cambridge</a></li>
+        <li><a onclick="showPage('caps')" id="nav-caps">CAPS</a></li>
+        <li><a onclick="showPage('about')" id="nav-about">About Us</a></li>
+        <li><a onclick="showPage('contact')" id="nav-contact" class="btn-nav-cta">Contact Us</a></li>
+      </ul>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a onclick="showPage('home');closeMobile()">Home</a>
+      <a onclick="showPage('cambridge');closeMobile()">Cambridge Curriculum</a>
+      <a onclick="showPage('caps');closeMobile()">CAPS Curriculum</a>
+      <a onclick="showPage('about');closeMobile()">About Us</a>
+      <a onclick="showPage('contact');closeMobile()" class="btn-nav-cta">Contact Us</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE: HOME
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="page active" id="page-home">
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-bg-blob"></div>
+      <div class="hero-content">
+        <div class="hero-badge">In-Person · One-on-One & Small Group Tuition</div>
+        <h1>Where Learners<br/>Find Their <em>Academic Voice</em></h1>
+        <p>Nexus Study Centre in Fontainebleau, Randburg, offers personalised academic support for homeschooling and after-school learners across the Cambridge International and CAPS curricula.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-blue" onclick="showPage('contact')">Enquire Now →</button>
+          <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4)" onclick="showPage('about')">Our Story</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>8+</strong><span>Years of Experience</span></div>
+          <div class="hero-stat"><strong>2</strong><span>Curricula Offered</span></div>
+          <div class="hero-stat"><strong>Small</strong><span>Class Sizes</span></div>
+          <div class="hero-stat"><strong>100%</strong><span>Personalised Approach</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Nexus -->
+    <section style="background:var(--off-white)">
+      <div class="container">
+        <div class="section-header center">
+          <div class="section-tag">Why Choose Nexus</div>
+          <h2 class="section-title">A Learning Environment Designed Around <em>Your Child</em></h2>
+          <p class="section-subtitle">We believe meaningful learning happens when students feel supported, understood, and encouraged to think independently.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon">👤</div>
+            <h3>One-on-One Attention</h3>
+            <p>Our small class sizes ensure every learner receives the individualised guidance needed to truly understand and excel in their subjects.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">📚</div>
+            <h3>Dual Curriculum Expertise</h3>
+            <p>We offer both Cambridge International (Primary through A-Level) and CAPS (Grade 1–12), giving families flexible and well-supported academic pathways.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🧠</div>
+            <h3>Neurodiverse-Friendly</h3>
+            <p>Our nurturing environment is designed to cater to diverse learning styles and neurotypes, ensuring every learner feels included and confident.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🏠</div>
+            <h3>Homeschooling & After School</h3>
+            <p>Whether your child is homeschooled full-time or needs academic support after school, Nexus has the right programme for your family's needs.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🎓</div>
+            <h3>Rigorous Academic Preparation</h3>
+            <p>We prepare learners for demanding programmes including Cambridge IGCSE, AS and A-Level examinations with confidence and thoroughness.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💬</div>
+            <h3>Critical Thinking Focus</h3>
+            <p>Beyond academic performance, we build confidence, independent thinking, and the discipline required to thrive in higher education and beyond.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section>
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:0">
+          <div>
+            <div class="section-tag">Our Classrooms</div>
+            <h2 class="section-title">A Focused, Supportive Academic Environment</h2>
+            <p class="section-subtitle" style="margin-bottom:26px">Nexus offers a warm, structured space where learners aged from senior primary through to A-Level come to grow academically and build lasting confidence.</p>
+            <button class="btn btn-primary" onclick="showPage('about')">Learn More About Us</button>
+          </div>
+          <div class="photo-grid">
+            <div class="p1"><img src="pexels-max-fischer-5212676.jpg" alt="Classroom"/></div>
+            <div class="p2"><img src="gettyimages-813980050-612x612.jpg" alt="Students"/></div>
+            <div class="p3"><img src="gettyimages-652204704-612x612.jpg" alt="Tutoring"/></div>
+            <div class="p4"><img src="pexels-polina-tankilevitch-6929183.jpg" alt="One-on-one"/></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curriculum Cards -->
+    <section style="background:var(--off-white)">
+      <div class="container">
+        <div class="section-header center">
+          <div class="section-tag">Our Programmes</div>
+          <h2 class="section-title">Two Curricula, One Commitment to Excellence</h2>
+        </div>
+        <div class="curriculum-cards">
+          <div class="curr-card" onclick="showPage('cambridge')">
+            <img src="pexels-karola-g-6256064.jpg" alt="Cambridge"/>
+            <div class="curr-overlay">
+              <div class="tag">International</div>
+              <h3>Cambridge Curriculum</h3>
+              <p>Primary through to A-Level. Globally recognised qualifications with rigorous academic content.</p>
+              <a>Explore Cambridge →</a>
+            </div>
+          </div>
+          <div class="curr-card" onclick="showPage('caps')">
+            <img src="gettyimages-939150506-612x612.jpg" alt="CAPS"/>
+            <div class="curr-overlay">
+              <div class="tag">South African</div>
+              <h3>CAPS Curriculum</h3>
+              <p>Grade 1 through Grade 12. South Africa's National Curriculum with full subject support.</p>
+              <a>Explore CAPS →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="testimonial-strip">
+      <div class="container">
+        <div class="quote-block">
+          <div class="q-mark">"</div>
+          <blockquote>Our mission is to help every learner build confidence, independence, and strong academic foundations through individualised guidance and meaningful learning experiences.</blockquote>
+          <cite>— Nexus Study Centre Mission Statement</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section>
+      <div class="container">
+        <div style="background:linear-gradient(135deg,var(--navy) 0%,#1a1a5e 100%);border-radius:var(--radius-lg);padding:60px 56px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+          <div>
+            <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);color:white;margin-bottom:10px">Ready to Start Your<br/>Academic Journey?</h2>
+            <p style="color:rgba(255,255,255,0.65);font-size:0.95rem">Contact us today to discuss your learner's needs and find the right programme.</p>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <button class="btn btn-blue" onclick="showPage('contact')">Get in Touch</button>
+            <a href="tel:0827327292" class="btn btn-white">082 732 7292</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="cursor:default">
+            <img src="nexus_profile_square.png" alt="Logo" style="width:48px;height:48px;border-radius:10px"/>
+            <div class="nav-logo-text"><strong>Nexus Study Centre</strong><span>Fontainebleau · Randburg</span></div>
+          </div>
+          <p>Personalised academic support for homeschooling and after-school learners. Cambridge and CAPS curricula. Small classes. Big results.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul>
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('cambridge')">Cambridge Curriculum</a></li>
+            <li><a onclick="showPage('caps')">CAPS Curriculum</a></li>
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('contact')">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Cambridge</h4>
+          <ul>
+            <li><a onclick="showPage('cambridge')">Primary</a></li>
+            <li><a onclick="showPage('cambridge')">IGCSE</a></li>
+            <li><a onclick="showPage('cambridge')">AS Level</a></li>
+            <li><a onclick="showPage('cambridge')">A Level</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:0827327292">082 732 7292</a></li>
+            <li><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></li>
+            <li><a href="mailto:admin@nexusstudycentre.com">admin@nexusstudycentre.com</a></li>
+            <li><a>92 Ethel Street, Fontainebleau</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Nexus Study Centre. All rights reserved. Fontainebleau, Randburg.</span>
+        <span>Designed for academic excellence.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE: CAMBRIDGE
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="page-cambridge">
+    <div class="page-wrap">
+      <div class="page-hero cambridge">
+        <div class="container">
+          <div class="section-tag" style="margin-bottom:16px">Cambridge International Education</div>
+          <h1>Cambridge Curriculum</h1>
+          <p>Globally recognised qualifications from Primary through to A-Level. At Nexus, we deliver Cambridge International programmes through small-group and one-on-one instruction, ensuring depth of understanding and examination confidence.</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="container">
+
+          <!-- PRIMARY -->
+          <div class="level-section" id="level-primary">
+            <div class="level-header">
+              <div class="level-num">01</div>
+              <div class="level-info">
+                <h2>Cambridge Primary</h2>
+                <p>Foundation years building core academic skills. Cambridge Primary provides a strong base in literacy, numeracy, and inquiry, developing learners aged 5–11 with internationally benchmarked content that nurtures curiosity and a love of learning.</p>
+              </div>
+            </div>
+            <div class="subjects-grid">
+              <div class="subject-pill">English Language</div>
+              <div class="subject-pill">Mathematics</div>
+              <div class="subject-pill">Science</div>
+              <div class="subject-pill">Global Perspectives</div>
+              <div class="subject-pill">Digital Literacy</div>
+              <div class="subject-pill">Art & Design</div>
+              <div class="subject-pill">Music</div>
+              <div class="subject-pill">Physical Education</div>
+            </div>
+          </div>
+
+          <!-- IGCSE -->
+          <div class="level-section" id="level-igcse">
+            <div class="level-header">
+              <div class="level-num">02</div>
+              <div class="level-info">
+                <h2>Cambridge IGCSE</h2>
+                <p>The International General Certificate of Secondary Education (IGCSE) is one of the world's most recognised and respected qualifications for learners aged 14–16. Nexus provides thorough preparation across core and elective subjects to ensure learners excel in both coursework and examinations.</p>
+              </div>
+            </div>
+            <div class="subjects-grid">
+              <div class="subject-pill">English Language</div>
+              <div class="subject-pill">English Literature</div>
+              <div class="subject-pill">Mathematics</div>
+              <div class="subject-pill">Additional Mathematics</div>
+              <div class="subject-pill">Physics</div>
+              <div class="subject-pill">Chemistry</div>
+              <div class="subject-pill">Biology</div>
+              <div class="subject-pill">Combined Science</div>
+              <div class="subject-pill">History</div>
+              <div class="subject-pill">Geography</div>
+              <div class="subject-pill">Economics</div>
+              <div class="subject-pill">Business Studies</div>
+              <div class="subject-pill">Accounting</div>
+              <div class="subject-pill">Computer Science</div>
+              <div class="subject-pill">French</div>
+              <div class="subject-pill">Afrikaans</div>
+              <div class="subject-pill">Global Perspectives</div>
+              <div class="subject-pill">Art & Design</div>
+            </div>
+          </div>
+
+          <!-- AS LEVEL -->
+          <div class="level-section" id="level-as">
+            <div class="level-header">
+              <div class="level-num">03</div>
+              <div class="level-info">
+                <h2>Cambridge AS Level</h2>
+                <p>Cambridge AS Level represents the first half of the full A-Level programme. It provides learners with advanced study in their chosen subjects, bridging secondary education and the demands of university-level learning. AS Level is widely recognised by universities worldwide for admissions.</p>
+              </div>
+            </div>
+            <div class="subjects-grid">
+              <div class="subject-pill">English Language</div>
+              <div class="subject-pill">English Literature</div>
+              <div class="subject-pill">Mathematics</div>
+              <div class="subject-pill">Further Mathematics</div>
+              <div class="subject-pill">Physics</div>
+              <div class="subject-pill">Chemistry</div>
+              <div class="subject-pill">Biology</div>
+              <div class="subject-pill">History</div>
+              <div class="subject-pill">Geography</div>
+              <div class="subject-pill">Economics</div>
+              <div class="subject-pill">Business</div>
+              <div class="subject-pill">Accounting</div>
+              <div class="subject-pill">Computer Science</div>
+              <div class="subject-pill">Psychology</div>
+              <div class="subject-pill">Sociology</div>
+              <div class="subject-pill">French</div>
+            </div>
+          </div>
+
+          <!-- A LEVEL -->
+          <div class="level-section" id="level-a">
+            <div class="level-header">
+              <div class="level-num">04</div>
+              <div class="level-info">
+                <h2>Cambridge A Level</h2>
+                <p>Cambridge A Level is the gold standard of pre-university qualification, recognised and respected by universities globally. At Nexus, A-Level learners receive highly specialised, in-depth academic preparation through personalised instruction designed to meet the rigorous demands of these examinations.</p>
+              </div>
+            </div>
+            <div class="subjects-grid">
+              <div class="subject-pill">English Language</div>
+              <div class="subject-pill">English Literature</div>
+              <div class="subject-pill">Mathematics</div>
+              <div class="subject-pill">Further Mathematics</div>
+              <div class="subject-pill">Physics</div>
+              <div class="subject-pill">Chemistry</div>
+              <div class="subject-pill">Biology</div>
+              <div class="subject-pill">History</div>
+              <div class="subject-pill">Geography</div>
+              <div class="subject-pill">Economics</div>
+              <div class="subject-pill">Business</div>
+              <div class="subject-pill">Accounting</div>
+              <div class="subject-pill">Computer Science</div>
+              <div class="subject-pill">Psychology</div>
+              <div class="subject-pill">Sociology</div>
+              <div class="subject-pill">Law</div>
+              <div class="subject-pill">French</div>
+              <div class="subject-pill">General Studies</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div style="background:var(--blue-pale);border-radius:var(--radius-lg);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;border:1px solid rgba(121,166,241,0.3)">
+            <div>
+              <h3 style="font-size:1.6rem;color:var(--navy);margin-bottom:8px">Interested in Cambridge Programmes?</h3>
+              <p style="color:var(--text-muted);font-size:0.92rem">Contact us to find out which Cambridge level is right for your learner.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showPage('contact')">Enquire Now →</button>
+          </div>
+
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="nav-logo" style="cursor:default"><img src="nexus_profile_square.png" alt="Logo" style="width:48px;height:48px;border-radius:10px"/><div class="nav-logo-text"><strong>Nexus Study Centre</strong><span>Fontainebleau · Randburg</span></div></div>
+            <p>Cambridge International and CAPS tuition. Small classes. Personalised support. Real results.</p>
+          </div>
+          <div class="footer-col"><h4>Pages</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('cambridge')">Cambridge</a></li><li><a onclick="showPage('caps')">CAPS</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
+          <div class="footer-col"><h4>Cambridge</h4><ul><li><a>Primary</a></li><li><a>IGCSE</a></li><li><a>AS Level</a></li><li><a>A Level</a></li></ul></div>
+          <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0827327292">082 732 7292</a></li><li><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>© 2025 Nexus Study Centre. All rights reserved.</span></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE: CAPS
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="page-caps">
+    <div class="page-wrap">
+      <div class="page-hero caps">
+        <div class="container">
+          <div class="section-tag" style="margin-bottom:16px">South African National Curriculum</div>
+          <h1>CAPS Curriculum</h1>
+          <p>Full support for the Curriculum and Assessment Policy Statement (CAPS) from Grade 1 through Grade 12. Nexus offers focused, personalised tuition aligned with South Africa's national curriculum, preparing learners for each phase of their schooling journey.</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="container">
+
+          <div class="grade-bands">
+
+            <!-- FOUNDATION PHASE -->
+            <div class="grade-band">
+              <div class="grade-band-head">
+                <h3>Foundation Phase</h3>
+                <span>Grades 1 – 3</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">Building foundational literacy and numeracy skills. Learners are introduced to core concepts in a nurturing environment that builds confidence from the very start.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Life Skills</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INTERMEDIATE PHASE -->
+            <div class="grade-band">
+              <div class="grade-band-head">
+                <h3>Intermediate Phase</h3>
+                <span>Grades 4 – 6</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">Expanding subject knowledge and deepening understanding as learners transition to more complex academic content and begin developing independent study skills.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Natural Sciences &amp; Technology</div>
+                  <div class="subject-pill">Social Sciences</div>
+                  <div class="subject-pill">Life Skills</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SENIOR PHASE -->
+            <div class="grade-band">
+              <div class="grade-band-head">
+                <h3>Senior Phase</h3>
+                <span>Grades 7 – 9</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">A critical phase where learners encounter increasingly specialised subjects. Nexus provides structured support as students prepare for the demands of the FET phase.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Natural Sciences</div>
+                  <div class="subject-pill">Social Sciences</div>
+                  <div class="subject-pill">Technology</div>
+                  <div class="subject-pill">Economic &amp; Management Sciences</div>
+                  <div class="subject-pill">Life Orientation</div>
+                  <div class="subject-pill">Creative Arts</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- FET PHASE -->
+            <div class="grade-band">
+              <div class="grade-band-head">
+                <h3>FET Phase – Grade 10</h3>
+                <span>Further Education &amp; Training</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">Grade 10 marks the beginning of the FET phase where learners choose their subject combination. Nexus supports the transition from general education to specialised subject study.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Mathematical Literacy</div>
+                  <div class="subject-pill">Physical Sciences</div>
+                  <div class="subject-pill">Life Sciences</div>
+                  <div class="subject-pill">Accounting</div>
+                  <div class="subject-pill">Business Studies</div>
+                  <div class="subject-pill">Economics</div>
+                  <div class="subject-pill">History</div>
+                  <div class="subject-pill">Geography</div>
+                  <div class="subject-pill">Computer Applications Technology</div>
+                  <div class="subject-pill">Life Orientation</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRADE 11 -->
+            <div class="grade-band">
+              <div class="grade-band-head">
+                <h3>FET Phase – Grade 11</h3>
+                <span>Further Education &amp; Training</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">Grade 11 is a pivotal year of consolidation and preparation. At Nexus, learners receive focused attention to deepen understanding and address gaps before the final matriculation year.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Mathematical Literacy</div>
+                  <div class="subject-pill">Physical Sciences</div>
+                  <div class="subject-pill">Life Sciences</div>
+                  <div class="subject-pill">Accounting</div>
+                  <div class="subject-pill">Business Studies</div>
+                  <div class="subject-pill">Economics</div>
+                  <div class="subject-pill">History</div>
+                  <div class="subject-pill">Geography</div>
+                  <div class="subject-pill">Computer Applications Technology</div>
+                  <div class="subject-pill">Life Orientation</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRADE 12 -->
+            <div class="grade-band">
+              <div class="grade-band-head" style="background:linear-gradient(135deg,#0d0d30 0%,var(--navy) 100%)">
+                <h3>Matric – Grade 12</h3>
+                <span style="color:#ffd700">⭐ National Senior Certificate</span>
+              </div>
+              <div class="grade-band-body">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;line-height:1.65">The most critical year of a learner's school career. Nexus provides intensive, targeted support to help matric learners achieve outstanding NSC results and university admission.</p>
+                <div class="subjects-grid">
+                  <div class="subject-pill">Home Language</div>
+                  <div class="subject-pill">First Additional Language</div>
+                  <div class="subject-pill">Mathematics</div>
+                  <div class="subject-pill">Mathematical Literacy</div>
+                  <div class="subject-pill">Physical Sciences</div>
+                  <div class="subject-pill">Life Sciences</div>
+                  <div class="subject-pill">Accounting</div>
+                  <div class="subject-pill">Business Studies</div>
+                  <div class="subject-pill">Economics</div>
+                  <div class="subject-pill">History</div>
+                  <div class="subject-pill">Geography</div>
+                  <div class="subject-pill">Computer Applications Technology</div>
+                  <div class="subject-pill">Life Orientation</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /grade-bands -->
+
+          <div style="margin-top:56px;background:var(--blue-pale);border-radius:var(--radius-lg);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;border:1px solid rgba(121,166,241,0.3)">
+            <div>
+              <h3 style="font-size:1.6rem;color:var(--navy);margin-bottom:8px">Enrol in CAPS Support Today</h3>
+              <p style="color:var(--text-muted);font-size:0.92rem">From Grade 1 to Matric — we have the right support for your learner at every stage.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showPage('contact')">Contact Us →</button>
+          </div>
+
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand"><div class="nav-logo" style="cursor:default"><img src="nexus_profile_square.png" alt="Logo" style="width:48px;height:48px;border-radius:10px"/><div class="nav-logo-text"><strong>Nexus Study Centre</strong><span>Fontainebleau · Randburg</span></div></div><p>CAPS tuition from Grade 1 to Grade 12 with personalised, structured academic support.</p></div>
+          <div class="footer-col"><h4>Pages</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('cambridge')">Cambridge</a></li><li><a onclick="showPage('caps')">CAPS</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
+          <div class="footer-col"><h4>CAPS Phases</h4><ul><li><a>Foundation (Gr 1–3)</a></li><li><a>Intermediate (Gr 4–6)</a></li><li><a>Senior (Gr 7–9)</a></li><li><a>FET (Gr 10–12)</a></li></ul></div>
+          <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0827327292">082 732 7292</a></li><li><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>© 2025 Nexus Study Centre. All rights reserved.</span></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE: ABOUT
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="page-about">
+    <div class="page-wrap">
+      <div class="page-hero" style="background:var(--navy)">
+        <div class="container">
+          <div class="section-tag" style="margin-bottom:16px">Our Story</div>
+          <h1>About Nexus Study Centre</h1>
+          <p>Eight years of dedicated academic support. Two curricula. One unwavering commitment: every learner deserves to succeed.</p>
+        </div>
+      </div>
+
+      <!-- About Split -->
+      <section>
+        <div class="container">
+          <div class="about-split">
+            <div class="about-img-stack">
+              <div class="years-badge"><strong>8+</strong><span>Years</span></div>
+              <div class="about-img-main"><img src="pexels-polina-tankilevitch-6929183.jpg" alt="Tutoring"/></div>
+              <div class="about-img-inset"><img src="gettyimages-813980050-612x612.jpg" alt="Students"/></div>
+            </div>
+            <div class="about-text">
+              <div class="section-tag">Who We Are</div>
+              <h2 class="section-title">A Small Centre with a Big Purpose</h2>
+              <p>Nexus Study Centre, based in Fontainebleau, Randburg, is a small, dynamic learning environment supporting learners from senior primary through to IGCSE and A-Level studies. The centre offers both the Cambridge International and CAPS curricula, allowing flexible academic pathways suited to each learner's goals and abilities.</p>
+              <p>With eight years of Cambridge and CAPS educational experience, Nexus provides personalised academic support, small-group instruction, and a nurturing environment that caters to diverse learning styles and neurotypes. Our small class sizes allow tutors to give each learner the attention they need, ensuring that students develop a strong understanding of their subjects while feeling confident to ask questions and engage with challenging academic material.</p>
+              <p>At Nexus, we believe meaningful learning happens when students feel supported, understood, and encouraged to think independently.</p>
+              <div class="about-highlights">
+                <div class="about-highlight"><strong>8+</strong><span>Years of Experience</span></div>
+                <div class="about-highlight"><strong>1:1</strong><span>Personalised Tuition</span></div>
+                <div class="about-highlight"><strong>2</strong><span>Curricula Offered</span></div>
+                <div class="about-highlight"><strong>Small</strong><span>Class Sizes</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Values -->
+      <section style="background:var(--off-white)">
+        <div class="container">
+          <div class="section-header center">
+            <div class="section-tag">Our Values</div>
+            <h2 class="section-title">The Principles That Guide Us</h2>
+            <p class="section-subtitle">Every decision we make is guided by what is best for the learner — academically, emotionally, and developmentally.</p>
+          </div>
+          <div class="values-grid">
+            <div class="value-card"><div class="value-icon">🌱</div><h3>Personalisation</h3><p>No two learners are the same. We tailor our approach to each student's unique needs, goals, and learning style.</p></div>
+            <div class="value-card"><div class="value-icon">💪</div><h3>Confidence Building</h3><p>We prioritise building self-assurance alongside academic skill, helping learners feel capable and empowered.</p></div>
+            <div class="value-card"><div class="value-icon">🧩</div><h3>Inclusion</h3><p>Our environment welcomes diverse learning styles and neurotypes, ensuring every learner finds their place.</p></div>
+            <div class="value-card"><div class="value-icon">🔍</div><h3>Critical Thinking</h3><p>We encourage learners to question, explore, and reason — developing thinkers, not just test-takers.</p></div>
+            <div class="value-card"><div class="value-icon">📐</div><h3>Academic Rigour</h3><p>We maintain high standards that prepare learners for the demanding requirements of Cambridge and matric programmes.</p></div>
+            <div class="value-card"><div class="value-icon">🤝</div><h3>Partnership</h3><p>We work closely with parents and families to ensure consistent, collaborative support for every learner.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mission -->
+      <section>
+        <div class="container">
+          <div class="mission-block">
+            <div>
+              <div class="section-tag" style="background:rgba(121,166,241,0.15);color:var(--blue)">Our Mission</div>
+              <h2>Building Foundations That Last</h2>
+              <p>Our mission is to help every learner build confidence, independence, and strong academic foundations through individualised guidance and meaningful learning experiences.</p>
+              <p style="margin-top:16px">Our approach focuses not only on academic performance but also on helping learners develop confidence, critical thinking skills, and the discipline required to succeed in demanding academic programmes such as Cambridge IGCSE and A-Level studies.</p>
+              <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap">
+                <button class="btn btn-blue" onclick="showPage('contact')">Get in Touch</button>
+                <button class="btn" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2)" onclick="showPage('cambridge')">Our Programmes</button>
+              </div>
+            </div>
+            <img src="photo-1454165804606-c3d57bc86b40.avif" alt="Study environment" style="border-radius:var(--radius);object-fit:cover;width:100%;height:320px"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- Photo Row -->
+      <section style="background:var(--off-white);padding-top:64px;padding-bottom:64px">
+        <div class="container">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;border-radius:var(--radius-lg);overflow:hidden">
+            <img src="gettyimages-652204704-612x612.jpg" alt="" style="height:220px;object-fit:cover;border-radius:var(--radius)"/>
+            <img src="gettyimages-99610381-612x612.jpg" alt="" style="height:220px;object-fit:cover;border-radius:var(--radius)"/>
+            <img src="pexels-max-fischer-5212676.jpg" alt="" style="height:220px;object-fit:cover;border-radius:var(--radius)"/>
+            <img src="gettyimages-1442803934-612x612.jpg" alt="" style="height:220px;object-fit:cover;border-radius:var(--radius)"/>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand"><div class="nav-logo" style="cursor:default"><img src="nexus_profile_square.png" alt="Logo" style="width:48px;height:48px;border-radius:10px"/><div class="nav-logo-text"><strong>Nexus Study Centre</strong><span>Fontainebleau · Randburg</span></div></div><p>Eight years of dedicated educational support in Cambridge and CAPS. We help learners thrive.</p></div>
+          <div class="footer-col"><h4>Pages</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('cambridge')">Cambridge</a></li><li><a onclick="showPage('caps')">CAPS</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
+          <div class="footer-col"><h4>Programmes</h4><ul><li><a onclick="showPage('cambridge')">Cambridge Primary</a></li><li><a onclick="showPage('cambridge')">Cambridge IGCSE</a></li><li><a onclick="showPage('cambridge')">Cambridge A-Level</a></li><li><a onclick="showPage('caps')">CAPS Grade 1–12</a></li></ul></div>
+          <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0827327292">082 732 7292</a></li><li><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>© 2025 Nexus Study Centre. All rights reserved.</span></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE: CONTACT
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="page" id="page-contact">
+    <div class="page-wrap">
+      <div class="page-hero" style="background:var(--navy);padding-bottom:60px">
+        <div class="container">
+          <div class="section-tag" style="margin-bottom:16px">Get in Touch</div>
+          <h1>Contact Nexus Study Centre</h1>
+          <p>We'd love to hear from you. Fill in the form below or reach out directly — we'll be in touch as soon as possible to discuss how we can support your learner.</p>
+        </div>
+      </div>
+
+      <section style="padding-top:64px;padding-bottom:80px">
+        <div class="container">
+          <div class="contact-grid">
+
+            <!-- Contact Info -->
+            <div>
+              <div class="contact-info-card">
+                <h2>Let's Connect</h2>
+                <p>Nexus Study Centre is based in Fontainebleau, Randburg. We welcome enquiries from families looking for personalised academic support.</p>
+
+                <div class="contact-item">
+                  <div class="contact-icon">📞</div>
+                  <div>
+                    <h4>Phone</h4>
+                    <p><a href="tel:0827327292">082 732 7292</a></p>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <div class="contact-icon">✉️</div>
+                  <div>
+                    <h4>Email</h4>
+                    <p><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></p>
+                    <p><a href="mailto:admin@nexusstudycentre.com">admin@nexusstudycentre.com</a></p>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <div class="contact-icon">📍</div>
+                  <div>
+                    <h4>Address</h4>
+                    <p>92 Ethel Street<br/>Fontainebleau, Randburg<br/>Johannesburg</p>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <div class="contact-icon">🕐</div>
+                  <div>
+                    <h4>Hours</h4>
+                    <p>Monday – Friday: 8:00 AM – 6:00 PM<br/>Saturday: 9:00 AM – 1:00 PM</p>
+                  </div>
+                </div>
+
+                <div class="social-links">
+                  <a href="https://wa.me/27827327292" class="social-link" target="_blank" title="WhatsApp">💬</a>
+                  <a href="mailto:info@nexusstudycentre.com" class="social-link" title="Email">✉️</a>
+                  <a href="tel:0827327292" class="social-link" title="Call">📞</a>
+                </div>
+
+                <div class="map-embed">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.0!2d27.979!3d-26.097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDA1JzQ5LjIiUyAyN8KwNTgnNDQuNCJF!5e0!3m2!1sen!2sza!4v1"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    title="Nexus Study Centre Location">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div>
+              <div class="contact-form-card">
+                <h2>Send Us an Enquiry</h2>
+                <p>Complete the form below and we will get back to you within one business day.</p>
+
+                <div id="contactFormWrap">
+                  <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="e.g. Sarah Johnson" required/>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required/>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. 082 123 4567" required/>
+                      </div>
+                      <div class="form-group">
+                        <label for="gradeLevel">Student Grade / Level *</label>
+                        <select id="gradeLevel" name="gradeLevel" required>
+                          <option value="" disabled selected>Select grade or level</option>
+                          <optgroup label="CAPS — Foundation Phase">
+                            <option>Grade 1</option>
+                            <option>Grade 2</option>
+                            <option>Grade 3</option>
+                          </optgroup>
+                          <optgroup label="CAPS — Intermediate Phase">
+                            <option>Grade 4</option>
+                            <option>Grade 5</option>
+                            <option>Grade 6</option>
+                          </optgroup>
+                          <optgroup label="CAPS — Senior Phase">
+                            <option>Grade 7</option>
+                            <option>Grade 8</option>
+                            <option>Grade 9</option>
+                          </optgroup>
+                          <optgroup label="CAPS — FET Phase">
+                            <option>Grade 10</option>
+                            <option>Grade 11</option>
+                            <option>Grade 12 (Matric)</option>
+                          </optgroup>
+                          <optgroup label="Cambridge International">
+                            <option>Cambridge Primary</option>
+                            <option>Cambridge Lower Secondary</option>
+                            <option>Cambridge IGCSE</option>
+                            <option>Cambridge AS Level</option>
+                            <option>Cambridge A Level</option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="curriculum">Curriculum of Interest *</label>
+                      <select id="curriculum" name="curriculum" required>
+                        <option value="" disabled selected>Select curriculum</option>
+                        <option value="cambridge">Cambridge International (Cambridge IGCSE / AS / A-Level)</option>
+                        <option value="caps">CAPS (South African National Curriculum)</option>
+                        <option value="both">Both Cambridge and CAPS</option>
+                        <option value="unsure">Not sure — please advise</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="classType">Class Type Preference</label>
+                      <select id="classType" name="classType">
+                        <option value="" disabled selected>Select preference</option>
+                        <option value="one-on-one">One-on-One Tuition</option>
+                        <option value="small-group">Small Group (Homeschool)</option>
+                        <option value="after-school">After School Support</option>
+                        <option value="any">No preference — happy to discuss</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="message">Message / Enquiry Details *</label>
+                      <textarea id="message" name="message" placeholder="Please tell us about your learner, the subjects you need support with, and any other relevant information…" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="howHeard">How did you hear about us?</label>
+                      <select id="howHeard" name="howHeard">
+                        <option value="" disabled selected>Please select</option>
+                        <option>Google Search</option>
+                        <option>Word of Mouth / Referral</option>
+                        <option>Social Media</option>
+                        <option>Community Notice Board</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+
+                    <button type="submit" class="form-submit">Send Enquiry →</button>
+                  </form>
+                </div>
+
+                <div class="form-success" id="formSuccess">
+                  <div class="check">✅</div>
+                  <h3>Enquiry Received!</h3>
+                  <p>Thank you for reaching out to Nexus Study Centre. We will review your enquiry and get back to you within one business day.<br/><br/>In the meantime, feel free to call us on <strong><a href="tel:0827327292">082 732 7292</a></strong>.</p>
+                  <button class="btn btn-primary" style="margin-top:24px" onclick="resetForm()">Send Another Enquiry</button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand"><div class="nav-logo" style="cursor:default"><img src="nexus_profile_square.png" alt="Logo" style="width:48px;height:48px;border-radius:10px"/><div class="nav-logo-text"><strong>Nexus Study Centre</strong><span>Fontainebleau · Randburg</span></div></div><p>Personalised Cambridge and CAPS tuition. Small groups. Real results.</p></div>
+          <div class="footer-col"><h4>Pages</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('cambridge')">Cambridge</a></li><li><a onclick="showPage('caps')">CAPS</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
+          <div class="footer-col"><h4>Programmes</h4><ul><li><a onclick="showPage('cambridge')">Cambridge</a></li><li><a onclick="showPage('caps')">CAPS</a></li></ul></div>
+          <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0827327292">082 732 7292</a></li><li><a href="mailto:info@nexusstudycentre.com">info@nexusstudycentre.com</a></li><li><a href="mailto:admin@nexusstudycentre.com">admin@nexusstudycentre.com</a></li><li><a>92 Ethel Street, Fontainebleau</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>© 2025 Nexus Study Centre. All rights reserved.</span></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ FLOATING WHATSAPP ═══════════════════════ -->
+  <div class="whatsapp-float">
+    <div class="whatsapp-tooltip">Chat on WhatsApp</div>
+    <a href="https://wa.me/27827327292?text=Hello%20Nexus%20Study%20Centre%2C%20I%27d%20like%20to%20enquire%20about%20tuition." target="_blank" class="whatsapp-btn" aria-label="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+
+  <script>
+    // ── PAGE NAVIGATION ──
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      // Update nav
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const navEl = document.getElementById('nav-' + id);
+      if (navEl) navEl.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    // ── HAMBURGER ──
+    document.getElementById('hamburgerBtn').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+    function closeMobile() {
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+
+    // ── FORM SUBMIT ──
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contactFormWrap').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+    function resetForm() {
+      document.getElementById('contactForm').reset();
+      document.getElementById('contactFormWrap').style.display = 'block';
+      document.getElementById('formSuccess').style.display = 'none';
+    }
+
+    // ── SCROLL NAV SHADOW ──
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('mainNav');
+      if (window.scrollY > 20) {
+        nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+      } else {
+        nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.25)';
+      }
+    });
+  </script>
+</body>
+</html>
